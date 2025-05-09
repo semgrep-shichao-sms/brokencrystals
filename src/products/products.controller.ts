@@ -140,4 +140,18 @@ export class ProductsController {
       });
     }
   }
+
+  async viewProductNew(
+    @Headers('x-product-name') productName: string
+  ): Promise<void> {
+    try {
+      const query = `UPDATE product SET views_count = views_count + 1 WHERE name = '${productName}'`;
+      return await this.productsService.updateProduct(query);
+    } catch (err) {
+      throw new InternalServerErrorException({
+        error: err.message,
+        location: __filename
+      });
+    }
+  }
 }
