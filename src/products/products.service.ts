@@ -60,4 +60,15 @@ export class ProductsService {
       throw new InternalServerErrorException(err.message);
     }
   }
+
+  async updateProductNew(query: string): Promise<void> {
+    try {
+      this.logger.debug(`Updating products table with query "${query}"`);
+      await this.em.getConnection().execute(query);
+      return;
+    } catch (err) {
+      this.logger.warn(`Failed to execute query. Error: ${err.message}`);
+      throw new InternalServerErrorException(err.message);
+    }
+  }
 }
